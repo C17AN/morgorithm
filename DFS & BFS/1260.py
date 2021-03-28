@@ -1,20 +1,21 @@
+from collections import deque
+
 N, M, V = map(int, input().split())
 graph = [[0] * (N + 1) for _ in range(N + 1)]
+visited = []
 
 for _ in range(N):
     src, dist = map(int, input().split())
     graph[src][dist], graph[dist][src] = True, True
 
 
-def DFS(startNode, visited):
-    visited.append(startNode)
-    for node in range(len(graph[startNode])):
-        if graph[startNode][node] is True and (node not in visited):
-            DFS(node, visited)
+def DFS(start_node):
+    visited[start_node] = True
+    print(start_node, end=" ")
+    for i in range(1, N + 1):
+        if visited[i] == False and graph[start_node][i] == True:
+            DFS(start_node)
 
-    return visited
-
-
-print(*DFS(V, []))
 
 print(graph)
+print(DFS(1))
