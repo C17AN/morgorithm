@@ -1,21 +1,49 @@
 from collections import deque
 
 N, M, V = map(int, input().split())
-graph = [[0] * (N + 1) for _ in range(N + 1)]
-visited = []
 
-for _ in range(N):
+graph = [[0] for i in range(10001)]
+dfs_ans = []
+bfs_ans = []
+
+for i in range(M):
     src, dist = map(int, input().split())
-    graph[src][dist], graph[dist][src] = True, True
+    graph[src].append(dist)
+    graph[dist].append(src)
+
+for i in range(N):
+    graph[i].sort()
 
 
-def DFS(start_node):
-    visited[start_node] = True
-    print(start_node, end=" ")
-    for i in range(1, N + 1):
-        if visited[i] == False and graph[start_node][i] == True:
-            DFS(start_node)
+def DFS(start_node, visited):
+    visited.append(start_node)
+    dfs_ans.append(start_node)
+    node_graph = graph[start_node]
+    for i in node_graph[1:]:
+        if i not in visited:
+            DFS(i, visited)
 
 
-print(graph)
-print(DFS(1))
+def BFS(start_node):
+    visited = []
+    queue = deque()
+    queue.append(start_node)
+    visited.append(start_node)
+    bfs_ans.append(start_node)
+
+    while len(queue) != 0:
+        next_node = queue.popleft()
+        node_graph = graph[next_node]
+        for i in node_graph[1:]:
+            if i not in visited:
+                queue.append(i)
+                visited.append(i)
+                bfs_ans.append(i)
+
+
+DFS(V, [])
+BFS(V)
+
+if len(dfs_ans) > 1:
+    print(*dfs_ans)
+    print(*bfs_ans)
