@@ -11,21 +11,15 @@ for i in S:
     if 'A' <= i <= 'Z':
         number_stack.append(numbers[ord(i) - 65])
     else:
+        a = number_stack.pop()
+        b = number_stack.pop()
         if i == "+":
-            a = number_stack.pop()
-            b = number_stack.pop()
             number_stack.append(a + b)
         if i == "-":
-            a = number_stack.pop()
-            b = number_stack.pop()
             number_stack.append(b - a)
         if i == "*":
-            a = number_stack.pop()
-            b = number_stack.pop()
             number_stack.append(a * b)
         if i == "/":
-            a = number_stack.pop()
-            b = number_stack.pop()
             number_stack.append(b / a)
 
 print(format(*number_stack, ".2f"))
