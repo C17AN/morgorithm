@@ -1,19 +1,20 @@
 N, M = map(int, input().split())
-number_list = [0] * (N + 1)
 visited = [False] * (N + 1)
+numberList = []
 
 
 def backTrack(depth):
     if depth == M:
-        print(*number_list)
+        print(*numberList)
         return
 
     for i in range(1, N + 1):
-        if i not in visited:
+        if visited[i] == False:
             visited[i] = True
-            number_list[depth] = i
+            numberList.append(i)
             backTrack(depth + 1)
             visited[i] = False
+            numberList.pop()
 
 
 backTrack(0)
