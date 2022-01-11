@@ -1,6 +1,10 @@
 import sys
 
-input = sys.stdin.readline()
-word = input()
+input = sys.stdin.readline
+alphabet = [0] * 26
+word = input().rstrip()
 
-print(word)
+for character in word:
+    alphabet[ord(character) - ord('a')] += 1
+
+print(*alphabet)
