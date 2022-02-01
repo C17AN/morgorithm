@@ -2,18 +2,24 @@ name: 알고리즘 문제풀이 기록
 on:
   push:
     branches:
-      - "main"
+      - "master"
 jobs:
   Create-PS-Record:
     name: "금일 알고리즘 문제풀이 기록"
     runs-on: ubuntu-latest
     env:
-      TODAY_DATE: date +%Y년%m월%d일
+      TODAY_DATE: date +%Y년-%m월-%d일
     steps:
       - name: fetch repository info
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
+
+      - name: make today directory
+        run: mkdir `date +%Y년-%m월-%d일`
+
+      - name: check directory
+        run: ls
 
       - name: start commit overlap
         uses: stefanzweifel/git-auto-commit-action@v4
