@@ -7,19 +7,21 @@ jobs:
   Create-PS-Record:
     name: "금일 알고리즘 문제풀이 기록"
     runs-on: ubuntu-latest
-    env:
-      TODAY_DATE: date +%Y년-%m월-%d일
     steps:
+      - name: set Today Date
+        run: echo "TODAY_DATE=$(date +%Y년 %m월 %d일)" >> $GITHUB_ENV
+
       - name: fetch repository info
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
-      - name: make directory with today's date && move solved code
+      - name: make directory with today's date & move solved code
         run: "{mkdir `date +%Y년-%m월-%d일` && mv *.py `date +%Y년-%m월-%d일`} || mv *.py `date +%Y년-%m월-%d일`"
 
-      - name: start commit overlap
+      - name: overlap commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "[env.TODAY_DATE]"
+          commit_message: ${{ env.TODAY_DATE }} 문제 풀이 기록
+          commit_user_name: Chanmin, Kim <kimchanmin1@gmail.com>
           commit_author: "Chanmin, Kim <kimchanmin1@gmail.com>"
