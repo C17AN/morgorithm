@@ -15,11 +15,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: make today directory
-        run: mkdir `date +%Y년-%m월-%d일`
-
-      - name: check directory
-        run: ls
+      - name: make directory with today's date && move solved code
+        run: "{mkdir `date +%Y년-%m월-%d일` && mv temp2.py `date +%Y년-%m월-%d일`} || mv temp2.py `date +%Y년-%m월-%d일`"
 
       - name: start commit overlap
         uses: stefanzweifel/git-auto-commit-action@v4
